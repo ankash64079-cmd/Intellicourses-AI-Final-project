@@ -1,0 +1,22 @@
+# --- Course Catalog Data ---
+# This data is extracted from the provided PDF catalogs and serves as the 
+# searchable knowledge base for the RAG system.
+
+COURSE_CATALOG_CHUNKS = [
+    # CS Courses
+    "Course Code: CS 101, Course Title: Introduction to Programming, Credits: 3. Description: A foundational course introducing the principles of programming using **Python**. Topics include variables, data types, control structures, functions, and basic data structures like lists and dictionaries. Prerequisites: None. Instructor: Professor Ada Lovelace. Schedule: Mon/Wed/Fri 10:00 AM - 10:50 AM.",
+    "Course Code: CS 240, Course Title: Data Structures and Algorithms, Credits: 3. Description: Covers the design, analysis, and implementation of fundamental data structures in **Java**. Topics include stacks, queues, linked lists, trees, hash tables, and graphs. Prerequisites: **CS 101**. Instructor: Professor Alan Turing. Schedule: Tue/Thu 1:00 PM - 2:15 PM.",
+    "Course Code: CS 360, Course Title: Introduction to Database Systems, Credits: 3. Topics include the relational model, **SQL** (Structured Query Language), database design (ER diagrams, normalization), transaction management, and NoSQL databases. Prerequisites: **CS 240**. Instructor: Dr. Edgar Codd. Schedule: Mon/Wed 2:30 PM - 3:45 PM.",
+    "Course Code: CS 482, Course Title: Applied Machine Learning, Credits: 3. Description: Practical introduction to machine learning concepts. Topics: supervised learning (**regression, classification**), unsupervised learning (**clustering**), and model evaluation. Uses libraries like **Scikit-learn and TensorFlow**. Prerequisites: **CS 240, MATH 210**. Instructor: Dr. Yann LeCun. Schedule: Tue/Thu 4:00 PM - 5:15 PM.",
+    # MATH Courses
+    "Course Code: MATH 150, Course Title: Calculus I, Credits: 4. Topics include limits, continuity, derivatives, and applications. Prerequisites: High School Pre-Calculus or equivalent. Instructor: Professor Isaac Newton. Schedule: Mon/Wed/Fri 9:00 AM - 9:50 AM, Thu 9:00 AM - 9:50 AM (Lab).",
+    "Course Code: MATH 210, Course Title: Linear Algebra, Credits: 3. Topics include systems of linear equations, **matrix algebra**, vector spaces, determinants, eigenvalues, and eigenvectors. Prerequisites: **MATH 150**. Instructor: Dr. Gilbert Strang. Schedule: Tue/Thu 11:00 AM - 12:15 PM.",
+    "Course Code: MATH 230, Course Title: Discrete Mathematics, Credits: 3. Topics include **logic**, **set theory**, proof techniques, combinatorics, **graph theory**, and Boolean algebra. Prerequisites: **MATH 150**. Instructor: Professor Paul Erdös. Schedule: Mon/Wed/Fri 1:00 PM - 1:50 PM.",
+    # BUS Courses
+    "Course Code: BUS 101, Course Title: Introduction to Business, Credits: 3. A survey covering functional areas: management, marketing, finance, accounting, and operations. Prerequisites: None. Instructor: Professor Peter Drucker. Schedule: Tue/Thu 9:30 AM - 10:45 AM.",
+    "Course Code: BUS 220, Course Title: Business Analytics I, Credits: 3. Introduction to tools for data-driven decision-making. Topics include **descriptive statistics**, **data visualization**, probability distributions, and statistical inference. Uses software like **Excel and Tableau**. Prerequisites: **BUS 101, MATH 150**. Instructor: Dr. Florence Nightingale. Schedule: Mon/Wed/Fri 11:00 AM - 11:50 AM.",
+    "Course Code: BUS 340, Course Title: Principles of Marketing, Credits: 3. Exploration of marketing strategy and practice. Topics include consumer behavior, market research, branding, pricing, promotion, and distribution channels. Prerequisites: **BUS 101**. Instructor: Professor Philip Kotler. Schedule: Tue/Thu 2:30 PM - 3:45 PM.",
+    # BIO Courses (Interdisciplinary)
+    "Course Code: BIO 110, Course Title: Principles of Biology I, Credits: 4. Covers cell biology, genetics, and molecular biology. Prerequisites: None. Instructor: Dr. Rosalind Franklin. Schedule: Tue/Thu 10:00 AM - 11:15 AM, Wed 2:00 PM - 4:50 PM (Lab).",
+    "Course Code: BIO 350, Course Title: Introduction to Computational Biology, Credits: 3. **Interdisciplinary** course applying computational and statistical techniques to biological data. Students analyze genomic sequences, predict protein structures, and model biological systems. **Comfort with a programming language like Python is highly recommended**. Prerequisites: **BIO 110, CS 101**. Instructor: Dr. Francis Collins. Schedule: Mon/Wed 3:00 PM - 4:15 PM."
+]

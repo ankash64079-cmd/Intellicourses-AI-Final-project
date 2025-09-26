@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IntelliCourse AI 🎓</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    /* Base Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background: #f0f4f8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .app-container {
+        width: 100%;
+        max-width: 760px;
+        background: #ffffff;
+        border-radius: 25px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    header {
+        background: #1e40af;
+        color: #fff;
+        padding: 30px;
+        text-align: center;
+    }
+
+    header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    header p {
+        font-size: 1rem;
+        color: #dbeafe;
+    }
+
+    .chat-section {
+        display: flex;
+        flex-direction: column;
+        padding: 25px 30px;
+        gap: 20px;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .input-area {
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    #query-input {
+        flex: 1;
+        padding: 15px 20px;
+        border-radius: 20px;
+        border: 1px solid #cfd8e3;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    #query-input:focus {
+        border-color: #1e40af;
+        box-shadow: 0 0 8px rgba(30,64,175,0.2);
+    }
+
+    #submit-button {
+        padding: 0 25px;
+        border: none;
+        border-radius: 20px;
+        background: #1e40af;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    #submit-button:hover {
+        background: #162f6f;
+    }
+
+    .message {
+        max-width: 85%;
+        padding: 15px 20px;
+        border-radius: 20px;
+        font-size: 1rem;
+        line-height: 1.5;
+        word-wrap: break-word;
+    }
+
+    .user-msg {
+        align-self: flex-end;
+        background: #e0e7ff;
+        color: #1e40af;
+        border-bottom-right-radius: 0;
+    }
+
+    .ai-msg {
+        align-self: flex-start;
+        background: #1e40af;
+        color: #fff;
+        border-bottom-left-radius: 0;
+    }
+
+    .loading-spinner {
+        width: 30px;
+        height: 30px;
+        border: 4px solid #cfd8e3;
+        border-top: 4px solid #1e40af;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        align-self: flex-start;
+        display: none;
+        margin-bottom: 10px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg);}
+        100% { transform: rotate(360deg);}
+    }
+
+    footer {
+        text-align: center;
+        padding: 15px;
+        font-size: 0.9rem;
+        color: #555;
+        background: #f0f4f8;
+    }
+
+    @media (max-width: 768px) {
+        header h1 {
+            font-size: 1.8rem;
+        }
+
+        .app-container {
+            max-width: 95%;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1>IntelliCourse AI 🎓</h1>
+        <p>Your AI assistant for Northwood University's course catalog</p>
+    </header>
+
+    <div class="chat-section" id="chat-section">
+        <!-- Chat messages will appear here -->
+        <div class="message ai-msg">Hi! Ask me about courses, prerequisites, or topics.</div>
+    </div>
+
+    <div class="input-area">
+        <textarea id="query-input" placeholder="Type your query here..." rows="2"></textarea>
+        <button id="submit-button">Send</button>
+    </div>
+
+    <div class="loading-spinner" id="loading-indicator"></div>
+
+    <footer>
+        © 2025 IntelliCourse. All rights reserved.
+    </footer>
+</div>
+
+<script>
+const submitButton = document.getElementById('submit-button');
+const queryInput = document.getElementById('query-input');
+const chatSection = document.getElementById('chat-section');
+const loadingIndicator = document.getElementById('loading-indicator');
+
+submitButton.addEventListener('click', async () => {
+    const query = queryInput.value.trim();
+    if (!query) return;
+
+    // Add user message
+    const userMsg = document.createElement('div');
+    userMsg.className = 'message user-msg';
+    userMsg.textContent = query;
+    chatSection.appendChild(userMsg);
+
+    // Clear input
+    queryInput.value = '';
+
+    // Show loading
+    loadingIndicator.style.display = 'block';
+
+    // Scroll to bottom
+    chatSection.scrollTop = chatSection.scrollHeight;
+
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/query', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_query: query })
+        });
+        const data = await response.json();
+
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'message ai-msg';
+        aiMsg.textContent = data.answer || "No response received.";
+        chatSection.appendChild(aiMsg);
+
+    } catch (error) {
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'message ai-msg';
+        aiMsg.textContent = "Error fetching AI response.";
+        chatSection.appendChild(aiMsg);
+    } finally {
+        loadingIndicator.style.display = 'none';
+        chatSection.scrollTop = chatSection.scrollHeight;
+    }
+});
+</script>
+
+</body>
+</html>
